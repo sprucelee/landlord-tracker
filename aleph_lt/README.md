@@ -25,7 +25,7 @@ docker compose run shell aleph createuser --name="test user" --admin --password=
 docker compose run shell /landlord-tracker/aleph_lt/load_mappings.sh
 ```
 
-Log into the web UI as the user you created.
+Log into the web UI at http://localhost:8080/ as the user you created.
 
 When making major changes (especially involving changes to keys for entities),
 you'll probably want to reset the collection:
