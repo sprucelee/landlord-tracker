@@ -66,3 +66,7 @@ landlord_tracker:
             entity: parcel
           date:
             column: bill_yr
+          legalBasis:
+            literal: "ereal property tax record"
+          role:
+            literal: "taxpayer"
