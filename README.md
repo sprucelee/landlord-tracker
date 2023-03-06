@@ -66,7 +66,7 @@ First, generate files that Aleph will need to import:
 docker compose run elt python3 -m engels.export.aleph
 ```
 
-Then run the Aleph stack by following [these instructions](aleph_it/README.md).
+Then run the Aleph stack by following [these instructions](aleph_lt/README.md).
 
 ## Doing Development
 
