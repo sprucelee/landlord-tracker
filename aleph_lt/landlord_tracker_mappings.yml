@@ -64,3 +64,5 @@ landlord_tracker:
             entity: taxpayer
           asset:
             entity: parcel
+          date:
+            column: bill_yr
