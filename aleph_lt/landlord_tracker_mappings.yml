@@ -1,0 +1,72 @@
+
+# name of the Aleph collection
+landlord_tracker:
+  queries:
+
+  - csv_url: import/aleph_apartment_complex.csv
+    entities:
+      parcel_address:
+        schema: Address
+        keys:
+        - address_normalized
+        properties:
+          full:
+            column: address_normalized
+      parcel:
+        schema: RealEstate
+        keys:
+        - major_minor
+        properties:
+          name:
+            column: complex_descr
+          registrationNumber:
+            column: major_minor
+          addressEntity:
+            entity: parcel_address
+          propertyType:
+            literal: "Apartment Complex"
+
+  - csv_url: import/aleph_real_property_account.csv
+    entities:
+      taxpayer_address:
+        schema: Address
+        keys:
+        - address_normalized
+        properties:
+          full:
+            column: address_normalized
+      taxpayer:
+        schema: LegalEntity
+        # a taxpayer entity must be identified by name AND address
+        keys:
+        - taxpayer_name
+        - address_normalized
+        properties:
+          name:
+            column: taxpayer_name
+          addressEntity:
+            entity: taxpayer_address
+      parcel:
+        schema: RealEstate
+        keys:
+        - major_minor
+      tax_relation:
+        # TODO: Ownership is not the appropriate schema to use, need to find a relationship
+        # that indicates an entity paid tax on a property 
+        schema: Ownership
+        # not sure why we need key_literal
+        key_literal: Ownership
+        keys:
+        - taxpayer_name
+        - major_minor
+        properties:
+          owner:
+            entity: taxpayer
+          asset:
+            entity: parcel
+          date:
+            column: bill_yr
+          legalBasis:
+            literal: "ereal property tax record"
+          role:
+            literal: "taxpayer"

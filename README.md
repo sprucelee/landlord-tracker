@@ -54,6 +54,20 @@ docker compose run elt python3 -m engels.reports.report_address "123 MAIN ST"
 database, but the data should be preserved and available agaion the next time
 you run `compose up`.
 
+## Aleph
+
+This repo includes an [Aleph](https://github.com/alephdata/aleph) stack for
+browsing the data.
+
+First, generate files that Aleph will need to import:
+
+```sh
+# generate files in data/export
+docker compose run elt python3 -m engels.export.aleph
+```
+
+Then run the Aleph stack by following [these instructions](aleph_lt/README.md).
+
 ## Doing Development
 
 note: on windows, add "winpty" to the front of docker commands
@@ -77,7 +91,7 @@ docker compose run elt bash
 ### Documentation
 
 After running the transform step, you can view the updated dbt-generated
-HTML documentation at http://localhost:8000 to get a thousand foot view of
+HTML documentation at http://localhost:8001 to get a thousand foot view of
 the pipelines.
 
 ### Naming Conventions

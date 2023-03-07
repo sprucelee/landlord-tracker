@@ -1,0 +1,36 @@
+
+# Aleph
+
+This is a work in progress.
+
+This stack has been run on a laptop with 8GB of RAM but it's tight.
+
+```sh
+# make sure you're in this directory
+cd ~/landlord-tracker/aleph_lt
+
+# Aleph docs say to run this to allow ElasticSearch to map its memory
+sudo sysctl -w vm.max_map_count=262144
+
+# bring up all the services
+docker compose up --build -d
+
+# need to do this once to initialize
+docker compose run shell aleph upgrade
+
+# create a user
+docker compose run shell aleph createuser --name="test user" --admin --password=admin admin@example.com
+
+# load data into Aleph
+docker compose run shell bash -c "cd /landlord-tracker/aleph_lt && ./load_mappings.sh"
+```
+
+Log into the web UI at http://localhost:8080/ as the user you created.
+
+When making major changes (especially involving changes to keys for entities),
+you'll probably want to reset the collection:
+
+```sh
+docker compose run shell
+aleph delete landlord_tracker && aleph resetindex && aleph resetcache
+```
