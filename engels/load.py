@@ -108,15 +108,15 @@ def load_all():
                 create_table_sql = f"CREATE TABLE {table} ({fields})"
                 conn.execute(create_table_sql)
 
-                # path which the server (not this process) uses
-                server_path = get_db_data_path(table_entry['path'])
-
                 if format == FileFormat.TSV:
-                    sql_copy = f"COPY {table} ({','.join(column_names)}) FROM '{server_path}' WITH (FORMAT text, ENCODING '{encoding}')"
+                    sql_copy = f"copy {table} ({','.join(column_names)}) FROM STDIN WITH (FORMAT text, ENCODING '{encoding}')"
                 else:
-                    sql_copy = f"COPY {table} ({','.join(column_names)}) FROM '{server_path}' WITH (FORMAT csv, HEADER, ENCODING '{encoding}', FORCE_NULL({','.join(column_names)}))"
+                    sql_copy = f"copy {table} ({','.join(column_names)}) FROM STDIN WITH (FORMAT csv, HEADER, ENCODING '{encoding}', FORCE_NULL({','.join(column_names)}))"
 
-                conn.execute(sql_copy)
+                with open(full_path, "r", encoding=encoding) as f:
+                    cursor = conn.connection.cursor()
+                    # see https://www.psycopg.org/docs/cursor.html#cursor.copy_expert
+                    cursor.copy_expert(sql_copy, f, size=1024*1024)
 
                 # the 'header' option in COPY is only available for csv, so delete the row with the column names
                 if format == FileFormat.TSV:
