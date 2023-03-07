@@ -22,7 +22,7 @@ docker compose run shell aleph upgrade
 docker compose run shell aleph createuser --name="test user" --admin --password=admin admin@example.com
 
 # load data into Aleph
-docker compose run shell /landlord-tracker/aleph_lt/load_mappings.sh
+docker compose run shell bash -c "cd /landlord-tracker/aleph_lt && ./load_mappings.sh"
 ```
 
 Log into the web UI at http://localhost:8080/ as the user you created.

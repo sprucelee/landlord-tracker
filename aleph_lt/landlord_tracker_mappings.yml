@@ -3,7 +3,7 @@
 landlord_tracker:
   queries:
 
-  - csv_url: /landlord-tracker/data/export/aleph_apartment_complex.csv
+  - csv_url: import/aleph_apartment_complex.csv
     entities:
       parcel_address:
         schema: Address
@@ -26,7 +26,7 @@ landlord_tracker:
           propertyType:
             literal: "Apartment Complex"
 
-  - csv_url: /landlord-tracker/data/export/aleph_real_property_account.csv
+  - csv_url: import/aleph_real_property_account.csv
     entities:
       taxpayer_address:
         schema: Address
