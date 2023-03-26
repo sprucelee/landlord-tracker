@@ -1,0 +1,9 @@
+{% from "bootstrap5/form.html" import render_form %}
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>Building Lookup</h1>
+    <p>Please enter the full building address including the zip code</p>
+    {{ render_form(form, action=url_for("main.report")) }}
+
+{% endblock %}

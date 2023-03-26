@@ -1,0 +1,87 @@
+{% from "bootstrap5/table.html" import render_table %}
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ address }}</h1>
+
+    <a class="btn btn-outline-primary" href="{{url_for("main.index")}}">&laquo; Back</a>
+
+    <h2 class="mt-5">Overview</h2>
+    <table class="table table-bordered">
+        <thead>
+            <th scope="col">Field</th>
+            <th scope="col">Value</th>
+        </thead>
+        <tr>
+            <td>Description</td>
+            <td>{{ apartment.complex_descr }}</td>
+        </tr>
+        <tr>
+            <td>Parcel ID</td>
+            <td>{{ apartment.major }} {{ apartment.minor }}</td>
+        </tr>
+    </table>
+
+    <h2 class="mt-5">Names found in taxpayer entries</h2>
+    <table class="table table-bordered">
+        <thead>
+            <th scope="col">Taxpayer name</th>
+            <th scope="col">Associated addresses</th>
+        </thead>
+        {% for name, apts in taxpayer_name_apts.items() %}
+        <tr>
+            <td>{{ name }}</td>
+            <td>
+                <ul>
+                    {% for apt in apts %}
+                        <li>
+                            {{ apt.major_minor }} - {{ apt.address }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2 class="mt-5">Addresses found in taxpayer entries</h2>
+    <table class="table table-bordered">
+        <thead>
+            <th scope="col">Taxpayer address</th>
+            <th scope="col">Associated addresses</th>
+        </thead>
+        {% for address, apts in taxpayer_address_apts.items() %}
+        <tr>
+            <td>{{ address }}</td>
+            <td>
+                <ul>
+                    {% for apt in apts %}
+                        <li>
+                            {{ apt.major_minor }} - {{ apt.address }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2 class="mt-5">SDCI complaints</h2>
+    <table class="table table-bordered">
+        <thead>
+            <th scope="col">Open date</th>
+            <th scope="col">Description</th>
+        </thead>
+        {% for complaint in complaints %}
+        <tr>
+            <td>{{ complaint.open_date }}</td>
+            <td>
+                {{ complaint.description }}
+
+                <br>
+                {{ complaint.link | urlize }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

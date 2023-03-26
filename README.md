@@ -95,3 +95,36 @@ For tables:
 `ent_` - derived entity tables built from staging 
 
 `vld_` - for validation
+
+## Frontend
+
+The frontend should be brought up automatically at `http://localhost:5000` as part of
+docker-compose setup.
+
+### Updating Dependencies
+When updating dependencies, you will also need to regenerate the `poetry.lock` file:
+```
+# Install poetry globally
+pip install poetry
+
+# Install dependencies and regenerate poetry.lock
+poetry install
+git add poetry.lock
+```
+
+### Re-building the Container Image
+If you change the project dependencies or otherwise need to re-build the container image,
+run:
+```
+docker-compose up -d --build frontend
+```
+
+Changes to app python and template code will generally not require a re-build due to the
+flask auto-reloader.
+
+### Running Linters
+Run code formatters and linters:
+```
+poetry run black --safe app
+poetry run flake8
+```
