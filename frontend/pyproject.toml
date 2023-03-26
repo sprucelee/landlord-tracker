@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "landlord-tracker"
+version = "0.0.1"
+description = ""
+authors = [""]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Bootstrap-Flask = "2.2.0"
+Flask = "2.2.3"
+Flask-SQLAlchemy = "3.0.3"
+Flask-WTF = "1.1.1"
+psycopg2-binary = "2.9.5"
+usaddress-scourgify = "0.2.4"
+WTForms = "3.0.1"
+
+[tool.poetry.dev-dependencies]
+black = "23.1.0"
+flake8 = "6.0.0"
+pytest = "7.2.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -4,8 +4,7 @@ version: "3.9"
 services:
 
   elt:
-    build:
-      context: .
+    build: database
     # by default, don't do anything
     command: "noop"
     depends_on:
@@ -20,7 +19,7 @@ services:
     networks:
       - all
     volumes:
-      - .:/opt/kclp
+      - ./database:/opt/kclp
 
   docs:
     build:
@@ -29,7 +28,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - .:/opt/kclp
+      - ./database:/opt/kclp
 
   db:
     environment:
@@ -50,7 +49,25 @@ services:
     #user: postgres
     volumes:
       - db-data:/var/lib/postgresql/data
-      - ./data:/data
+      - ./database/data:/data
+
+  frontend:
+    build: frontend
+    depends_on:
+      - db
+    environment:
+      FLASK_DEBUG: 1
+      FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
+      SQLALCHEMY_DATABASE_URI: >-
+        postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_DB}/postgres
+
+    networks:
+      - all
+    ports:
+      - "5000:5000"
+    restart: always
+    volumes:
+      - ./frontend:/usr/src/app/frontend
 
 networks:
   all:
